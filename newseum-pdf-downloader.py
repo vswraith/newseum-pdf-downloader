@@ -4,6 +4,7 @@
     2014 Mark Norgren
 
     Edit PAPERS list to add the paper for download
+    PAPERS are downloaded to a 'downloads' directory in current working directory
     Get paper names at: http://www.newseum.org/todaysfrontpages/
     Follow the 'Readable PDF' link
 """
@@ -25,7 +26,12 @@ def fetchTodaysPDFFor(paper):
     """
     print "Grabbing frontpage for %s" % (paper)
     todaysDate = time.strftime("%Y.%m.%d")
-    fileName = "%s-%s.pdf" % (paper, todaysDate)
+
+    directory = "downloads"
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    fileName = os.path.join("downloads", "%s-%s.pdf" % (paper, todaysDate))
 
     page = NEWSEUM_PDF_URL.format(paper)
     print "page URL: %s" % (page)
@@ -36,9 +42,6 @@ def fetchTodaysPDFFor(paper):
     
 
 def main():
-    """
-    Main code goes here
-    """
     for paper in PAPERS:
         fetchTodaysPDFFor(paper)
 
